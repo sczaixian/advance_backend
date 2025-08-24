@@ -1,0 +1,15 @@
+
+
+
+https://access.rockx.com/node-api
+https://access.rockx.com?r=AGgqXBwxGKR
+
+
+solcjs --abi IERC20Metadata.sol
+C:\Users\sc\go\bin>abigen.exe --abi=D:\develop_project\go_proj\advance_backend\smart_contract\IERC20Metadata_sol_IERC20Metadata.abi --pkg=token --out=erc20.go
+
+
+goeth,以太网客户端，需要有一定的了解，可以帮助理解各项原理，加深整体理解
+使用 go 和合约交互必须要足够熟练
+需要熟练主流合约的设计，
+其他技能也需要整理：
