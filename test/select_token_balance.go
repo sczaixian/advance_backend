@@ -11,19 +11,14 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"         // 以太坊客户端
 
 	token "advance_backend/token" // 导入自动生成的ERC20代币合约绑定代码
-	// 注意：这个路径需要根据实际情况调整，通常使用go generate生成
 )
 
-func SelectTokenBalance() {
-	// 1. 连接到以太坊主网节点
-	// 使用Cloudflare提供的公共以太坊节点
-	client, err := ethclient.Dial(URL)
-	if err != nil {
-		log.Fatal(err) // 连接失败时终止程序
-	}
+// 查询代币余额
+func SelectTokenBalance(client *ethclient.Client) {
 
 	// 2. 定义要查询的代币合约地址（这里使用Golem代币合约）
-	tokenAddress := common.HexToAddress("0xfadea654ea83c00e5003d2ea15c59830b65471c0")
+	//tokenAddress := common.HexToAddress("0xfadea654ea83c00e5003d2ea15c59830b65471c0")
+	tokenAddress := common.HexToAddress(CONTRACT_ADDRESS)
 
 	// 3. 创建代币合约实例
 	// 使用自动生成的合约绑定代码创建合约实例
@@ -34,7 +29,8 @@ func SelectTokenBalance() {
 	}
 
 	// 4. 定义要查询余额的以太坊地址
-	address := common.HexToAddress("0x25836239F7b632635F815689389C537133248edb")
+	//address := common.HexToAddress("0x25836239F7b632635F815689389C537133248edb")
+	address := common.HexToAddress(ADDRESS_CMP_2)
 
 	// 5. 查询代币余额
 	// &bind.CallOpts{} 提供调用选项（如区块高度，这里使用默认值即最新区块）
@@ -76,6 +72,7 @@ func SelectTokenBalance() {
 
 	// 计算10^decimals的值（代币的精度基数）
 	precision := math.Pow10(int(decimals))
+	fmt.Printf("代币的精度基数: %d\n", precision)
 
 	// 将余额除以精度基数，得到可读的余额值
 	value := new(big.Float).Quo(fbal, big.NewFloat(precision))

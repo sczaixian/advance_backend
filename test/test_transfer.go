@@ -13,17 +13,12 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"  // 以太坊客户端
 )
 
-func TestTransfer() {
-	// 1. 连接到以太坊测试网络（Rinkeby）
-	// Infura是一个提供以太坊节点服务的平台
-	client, err := ethclient.Dial("https://rinkeby.infura.io")
-	if err != nil {
-		log.Fatal(err) // 连接失败时终止程序
-	}
-
+// ETH 转账
+func TestTransfer(client *ethclient.Client) {
 	// 2. 从十六进制字符串加载私钥
 	// 警告：在实际应用中，绝不应硬编码私钥，而应从安全存储中获取
-	privateKey, err := crypto.HexToECDSA("fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19")
+	//privateKey, err := crypto.HexToECDSA("fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19")
+	privateKey, err := crypto.HexToECDSA(PRIVATE_KEY_CMP)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -47,8 +42,8 @@ func TestTransfer() {
 	}
 
 	// 6. 设置转账金额（1 ETH）
-	// 以太坊使用wei作为最小单位，1 ETH = 10^18 wei
-	value := big.NewInt(1000000000000000000) // 1 ETH (以wei为单位)
+	// 以太坊使用wei作为最小单位，1 ETH = 10^18 wei 0.0964
+	value := big.NewInt(100000000000000) // 0.0001 ETH (以wei为单位)
 
 	// 7. 设置Gas限制（普通转账的标准Gas限制为21000）
 	gasLimit := uint64(21000) // 单位
@@ -60,7 +55,7 @@ func TestTransfer() {
 	}
 
 	// 9. 设置接收方地址
-	toAddress := common.HexToAddress("0x4592d8f8d7b001e72cb26a73e4fa1806a51ac79d")
+	toAddress := common.HexToAddress(ADDRESS_CMP_2)
 
 	// 10. 创建交易数据（普通转账为空，合约调用需要包含调用数据）
 	var data []byte

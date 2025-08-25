@@ -1,7 +1,7 @@
 package test
 
 import (
-	"crypto/ecdsa"
+	"crypto/ecdsa" // <-----用于生成随机私钥的 `GenerateKey` 方法
 	"fmt"
 	"log"
 
@@ -10,10 +10,11 @@ import (
 	"golang.org/x/crypto/sha3"
 )
 
+// GenPrivateKey 创建新钱包
 func GenPrivateKey() {
-	// 1. 生成一个新的ECDSA私钥（椭圆曲线数字签名算法）
-	// 在以太坊中，私钥是一个256位（32字节）的随机数
-	privateKey, err := crypto.GenerateKey()
+	// 用于签署交易的私钥，将被视为密码，永远不应该被共享给别人，因为谁拥有它可以访问你的所有资产
+	// 1. 生成一个新的ECDSA私钥（椭圆曲线数字签名算法） 在以太坊中，私钥是一个256位（32字节）的随机数
+	privateKey, err := crypto.GenerateKey() // privateKey 私钥对像
 	if err != nil {
 		log.Fatal(err) // 如果生成失败，记录错误并退出
 	}

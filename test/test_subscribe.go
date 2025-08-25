@@ -9,14 +9,8 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func TestSubscribe() {
-	// 1. 创建到以太坊测试网络（Ropsten）的WebSocket连接
-	// WebSocket连接支持实时订阅功能，适合监听新区块等实时事件
-	// 注意：Infura的WebSocket端点使用wss://协议
-	client, err := ethclient.Dial("wss://ropsten.infura.io/ws")
-	if err != nil {
-		log.Fatal(err) // 连接失败时终止程序
-	}
+// 订阅合约  必须是 WebSocket 地址，而不是 HTTP。
+func TestSubscribe(client *ethclient.Client) {
 
 	// 2. 创建一个通道，用于接收新的区块头
 	// 这个通道将传递*types.Header类型的指针
@@ -49,10 +43,10 @@ func TestSubscribe() {
 			}
 
 			// 8. 打印区块详细信息
-			fmt.Println("完整区块哈希:", block.Hash().Hex())      // 区块哈希
+			fmt.Println("完整区块哈希:", block.Hash().Hex())    // 区块哈希
 			fmt.Println("区块高度:", block.Number().Uint64())   // 区块号/高度
-			fmt.Println("区块时间戳:", block.Time())             // 区块时间戳（Unix时间）
-			fmt.Println("区块随机数:", block.Nonce())            // 工作量证明随机数
+			fmt.Println("区块时间戳:", block.Time())            // 区块时间戳（Unix时间）
+			fmt.Println("区块随机数:", block.Nonce())           // 工作量证明随机数
 			fmt.Println("交易数量:", len(block.Transactions())) // 区块中包含的交易数量
 
 			// 9. 可以在这里添加更多区块信息的处理逻辑

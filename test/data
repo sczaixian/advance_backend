@@ -1,0 +1,45 @@
+
+------------------------------部署erc20合约--------------------
+
+status	0x1 Transaction mined and execution succeed
+transaction hash	0xeee6c50329a52c35cd3b789cf62c3e71b98479c033fcc28f8206c4a12e8c90c9
+block hash	0x9476e1494561f594d3acf6284f531cfa1585819d329b71011da43f89645d30a7
+block number	9059159
+contract address	0xbaaa34743675c22be153484e0b452ff08472c345
+from	0x3E0bDb54f94D735dDCf8D2074c852a8C22914aA7
+to	MyToken.(constructor)
+gas	1276324 gas
+transaction cost	1265116 gas
+input	0x608...14aa7
+decoded input	{
+	"address initialOwner": "0x3E0bDb54f94D735dDCf8D2074c852a8C22914aA7"
+}
+decoded output	 -
+logs	[
+	{
+		"from": "0xbaaa34743675c22be153484e0b452ff08472c345",
+		"topic": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+		"event": "OwnershipTransferred",
+		"args": {
+			"0": "0x0000000000000000000000000000000000000000",
+			"1": "0x3E0bDb54f94D735dDCf8D2074c852a8C22914aA7"
+		}
+	}
+]
+raw logs	[
+  {
+    "address": "0xbaaa34743675c22be153484e0b452ff08472c345",
+    "blockHash": "0x9476e1494561f594d3acf6284f531cfa1585819d329b71011da43f89645d30a7",
+    "blockNumber": "0x8a3b57",
+    "data": "0x",
+    "logIndex": "0x4a",
+    "removed": false,
+    "topics": [
+      "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "0x0000000000000000000000003e0bdb54f94d735ddcf8d2074c852a8c22914aa7"
+    ],
+    "transactionHash": "0xeee6c50329a52c35cd3b789cf62c3e71b98479c033fcc28f8206c4a12e8c90c9",
+    "transactionIndex": "0x1a"
+  }
+]

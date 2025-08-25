@@ -17,17 +17,11 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"      // 以太坊客户端
 )
 
-func TestTokenTransfer() {
-	// 1. 连接到以太坊Sepolia测试网络
-	// 使用Alchemy提供的节点服务（需要替换为有效的API密钥）
-	client, err := ethclient.Dial(URL)
-	if err != nil {
-		log.Fatal(err)
-	}
+func TestTokenTransfer(client *ethclient.Client) {
 
 	// 2. 从十六进制字符串加载私钥
 	// 警告：在实际应用中，绝不应硬编码私钥，而应从安全存储中获取
-	privateKey, err := crypto.HexToECDSA(PRIVATE_KEY_HOM1) // 需要替换为实际私钥
+	privateKey, err := crypto.HexToECDSA(PRIVATE_KEY_CMP) // 需要替换为实际私钥
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -59,10 +53,10 @@ func TestTokenTransfer() {
 	}
 
 	// 8. 设置代币接收方地址
-	toAddress := common.HexToAddress(ADDRESS_HOM_1)
+	toAddress := common.HexToAddress(ADDRESS_CMP_2)
 
 	// 9. 设置代币合约地址
-	tokenAddress := common.HexToAddress("0x28b149020d2152179873ec60bed6bf7cd705775d")
+	tokenAddress := common.HexToAddress(CONTRACT_ADDRESS)
 
 	// 10. 构建ERC20代币转账的函数调用数据
 	// 首先获取transfer函数的选择器（前4个字节）
@@ -95,20 +89,31 @@ func TestTokenTransfer() {
 		To:   &tokenAddress, // 代币合约地址（注意是指针）
 		Data: data,          // 调用数据
 	})
+	fmt.Println("gasLimit:", gasLimit, "---- ", "err:", err)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("估算的Gas限制:", gasLimit) // 输出: 23256
 
+	txData := &types.LegacyTx{
+		Nonce:    nonce,
+		GasPrice: gasPrice,
+		Gas:      gasLimit,
+		To:       &tokenAddress,
+		Value:    value,
+		Data:     data,
+	}
 	// 15. 创建交易对象
 	// 注意：接收方是代币合约地址，而不是普通接收方
-	tx := types.NewTransaction(nonce, tokenAddress, value, gasLimit, gasPrice, data)
+	//tx := types.NewTransaction(nonce, tokenAddress, value, gasLimit, gasPrice, data)
+	tx := types.NewTx(txData)
 
 	// 16. 获取网络链ID（用于EIP-155签名）
 	chainID, err := client.NetworkID(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("chainID:", chainID, "privateKey:", privateKey)
 
 	// 17. 使用私钥对交易进行签名
 	signedTx, err := types.SignTx(tx, types.NewEIP155Signer(chainID), privateKey)
