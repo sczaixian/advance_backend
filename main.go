@@ -2,10 +2,11 @@ package main
 
 import (
 	"advance_backend/test"
+	"advance_backend/self_test"
 	"fmt"
 )
 
-func main() {
+func demo_test() {
 	client := test.TestClient()
 	_ = client
 	fmt.Println("-------client-----------\n\n")
@@ -35,4 +36,18 @@ func main() {
 	//fmt.Println("-------TestTokenTransfer-----------\n\n")
 	//test.TestSubscribe(client_ws)
 	//fmt.Println("-------TestSubscribe-----------\n\n")
+}
+
+func self_test() {
+	client := self_test.SepoliaClient()
+	_ = client
+	client_ws := self_test.WebSocketClinet()
+	_ = client_ws
+
+	self_test.TestAddress(client)
+	
+}
+
+func main() {
+	demo_test()
 }

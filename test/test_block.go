@@ -22,8 +22,8 @@ func TestBlock(client *ethclient.Client) {
 
 	// 打印区块头信息：
 	fmt.Println("区块高度:", header.Number.Uint64(), header.Number.String()) // 区块的编号 9028872
-	fmt.Println("时间戳:", header.Time)                                      // 区块生成时的Unix时间戳  1755735216
-	fmt.Println("难度值:", header.Difficulty.Uint64())                       // 该区块的工作量证明难度（PoS链上通常为0）  0
+	fmt.Println("时间戳:", header.Time)                                     // 区块生成时的Unix时间戳  1755735216
+	fmt.Println("难度值:", header.Difficulty.Uint64())                      // 该区块的工作量证明难度（PoS链上通常为0）  0
 	fmt.Println("区块哈希:", header.Hash().Hex())                            // 区块的唯一哈希值标识 0xbe1af555f4e317adfb1d1894f2faed5c88777cd15aa6a195840a69198287f456
 
 	// 获取完整的区块信息（包含所有交易详情）
@@ -34,10 +34,10 @@ func TestBlock(client *ethclient.Client) {
 
 	// 打印完整区块信息（应与区块头数据一致）：
 	fmt.Println("完整区块高度:", block.Number().Uint64())     // 确认区块高度  9028872
-	fmt.Println("完整区块时间戳:", block.Time())              // 确认时间戳   1755735216
+	fmt.Println("完整区块时间戳:", block.Time())               // 确认时间戳   1755735216
 	fmt.Println("完整区块难度:", block.Difficulty().Uint64()) // 确认难度值     0
 	// 0xbe1af555f4e317adfb1d1894f2faed5c88777cd15aa6a195840a69198287f456
-	fmt.Println("完整区块哈希:", block.Hash().Hex())    // 确认哈希值（应与header.Hash()一致）
+	fmt.Println("完整区块哈希:", block.Hash().Hex())      // 确认哈希值（应与header.Hash()一致）
 	fmt.Println("交易数量:", len(block.Transactions())) // 该区块中包含的交易数量  138
 
 	// 通过交易哈希获取该区块的交易数量（另一种方法）

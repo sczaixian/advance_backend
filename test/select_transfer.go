@@ -33,9 +33,9 @@ func SelectTransfer(client *ethclient.Client) {
 	for _, tx := range block.Transactions() {
 		fmt.Println("交易哈希:", tx.Hash().Hex())          // 打印交易哈希（交易的唯一标识符）
 		fmt.Println("交易金额(wei):", tx.Value().String()) // 打印交易金额（以wei为单位）
-		fmt.Println("Gas限制:", tx.Gas())                  // 打印Gas限制（执行交易所需的最大计算工作量）
-		fmt.Println("Gas价格:", tx.GasPrice().Uint64())    // 打印Gas价格（每个Gas单位的价格，以wei为单位）
-		fmt.Println("Nonce:", tx.Nonce())                  // 打印发送方的nonce值（交易计数器）
+		fmt.Println("Gas限制:", tx.Gas())                // 打印Gas限制（执行交易所需的最大计算工作量）
+		fmt.Println("Gas价格:", tx.GasPrice().Uint64())  // 打印Gas价格（每个Gas单位的价格，以wei为单位）
+		fmt.Println("Nonce:", tx.Nonce())              // 打印发送方的nonce值（交易计数器）
 		fmt.Println("交易数据:", tx.Data())                // 打印交易数据（对于普通转账为空，合约调用包含调用数据）
 		// 打印接收方地址（对于合约创建交易，此值为nil）
 		if tx.To() != nil {

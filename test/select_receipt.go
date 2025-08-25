@@ -44,22 +44,22 @@ func SelectReceipt(client *ethclient.Client) {
 	fmt.Println("验证是否相等：", receiptByHash[0] == receiptsByNum[0])
 
 	for _, receipt := range receiptByHash {
-		fmt.Println("交易状态：", receipt.Status)                     // 交易状态：1 表示成功
-		fmt.Println("日志事件:", receipt.Logs)                       // 交易触发的日志事件（空数组表示无事件）
-		fmt.Println("交易哈希:", receipt.TxHash.Hex())               // 交易哈希的十六进制表示
+		fmt.Println("交易状态：", receipt.Status)                // 交易状态：1 表示成功
+		fmt.Println("日志事件:", receipt.Logs)                  // 交易触发的日志事件（空数组表示无事件）
+		fmt.Println("交易哈希:", receipt.TxHash.Hex())          // 交易哈希的十六进制表示
 		fmt.Println("在区块中的索引位置:", receipt.TransactionIndex) // 交易在区块中的索引位置
-		fmt.Println(receipt.ContractAddress.Hex())                   // 合约地址（为零地址表示非合约创建交易）
-		break                                                        // 仅处理第一个回执后退出循环
+		fmt.Println(receipt.ContractAddress.Hex())          // 合约地址（为零地址表示非合约创建交易）
+		break                                               // 仅处理第一个回执后退出循环
 	}
 
 	// 遍历通过哈希获取的回执列表（此处仅处理第一个回执后跳出循环）
 	for _, receipt := range receiptsByNum {
-		fmt.Println("交易状态：", receipt.Status)                     // 交易状态：1 表示成功
-		fmt.Println("日志事件:", receipt.Logs)                       // 交易触发的日志事件（空数组表示无事件）
-		fmt.Println("交易哈希:", receipt.TxHash.Hex())               // 交易哈希的十六进制表示
+		fmt.Println("交易状态：", receipt.Status)                // 交易状态：1 表示成功
+		fmt.Println("日志事件:", receipt.Logs)                  // 交易触发的日志事件（空数组表示无事件）
+		fmt.Println("交易哈希:", receipt.TxHash.Hex())          // 交易哈希的十六进制表示
 		fmt.Println("在区块中的索引位置:", receipt.TransactionIndex) // 交易在区块中的索引位置
-		fmt.Println(receipt.ContractAddress.Hex())                   // 合约地址（为零地址表示非合约创建交易）
-		break                                                        // 仅处理第一个回执后退出循环
+		fmt.Println(receipt.ContractAddress.Hex())          // 合约地址（为零地址表示非合约创建交易）
+		break                                               // 仅处理第一个回执后退出循环
 	}
 
 	// 直接通过交易哈希获取特定交易的收据
