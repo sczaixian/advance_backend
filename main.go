@@ -1,10 +1,15 @@
 package main
 
 import (
+	"advance_backend/solana_test"
 	"advance_backend/test"
-	"advance_backend/self_test"
 	"fmt"
 )
+
+func demo_solana() {
+	//solana_test.TestAddress()
+	solana_test.TestCreateAccount()
+}
 
 func demo_test() {
 	client := test.TestClient()
@@ -39,15 +44,16 @@ func demo_test() {
 }
 
 func self_test() {
-	client := self_test.SepoliaClient()
-	_ = client
-	client_ws := self_test.WebSocketClinet()
-	_ = client_ws
+	//client := self_test.SepoliaClient()
+	//_ = client
+	//client_ws := self_test.WebSocketClinet()
+	//_ = client_ws
+	//
+	//self_test.TestAddress(client)
 
-	self_test.TestAddress(client)
-	
 }
 
 func main() {
-	demo_test()
+	//demo_test()
+	demo_solana()
 }
