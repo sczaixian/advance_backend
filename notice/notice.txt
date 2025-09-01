@@ -38,3 +38,67 @@ https://zhuanlan.zhihu.com/p/446271796
 是个分布式交易所
 用户自己掌控私钥，不会被平台控制
 基于 swap 和 factory 两个合约
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------  solana  -------------------------------------
+钱包地址: BJgJSEj1fqjC8uabfMw2Pho4sAt3YJbMcWuVkKNddaSn
+
+4Qd7RFcmxWwVUDNJEpGrANj2cxCqzwx2vFZJYeqv525so1Pd7koQL5crqUu77qv81rnh9hELJy1xUdVvPkLdkfA9
+
+404964504
+
+
+
+65thDEFVQ26rD6aMLKp4vVDisFVMnTUqD7tfi7644LF2hAgWofzGpLEzzAQmSTzoJ7YMRXbF7iqeceU5YHoZkLsE
+
+
+
+
+pub struct Account {
+    /// lamports in the account
+    pub lamports: u64,
+    /// data held in this account
+    #[cfg_attr(feature = "serde", serde(with = "serde_bytes"))]
+    pub data: Vec<u8>,
+    /// the program that owns this account. If executable, the program that loads this account.
+    pub owner: Pubkey,
+    /// this account's data contains a loaded program (and is now read-only)
+    pub executable: bool,
+    /// the epoch at which this account will next owe rent
+    pub rent_epoch: Epoch,
+}
+
+创建钱包的日志输出
+Public Key: BqHSufMg9jmf3og8FBj6uT1mv6n6WimbwD2569adqANU
+{
+  "data": {
+    "type": "Buffer",
+    "data": []
+  },
+  "executable": false,
+  "lamports": 1000000000,
+  "owner": "11111111111111111111111111111111",
+  "rentEpoch": 0,
+  "space": 0
+}
+
+
+
+  ----------- solana 的特点 -------------
+  提高交易速度（高吞吐量）和低成本，同时保持安全和去中心化
+
+  pof（历史证明）：是一个加密时钟，通过创建一个可验证的延迟函数（VDF），让每个节点都能用自己的时钟来编码时间流逝，从而生成一个历史记录，证明某个事件在特定时间点发生过。
+            解决传统区块链中，节点需要互相通信确定事件发生的时序，这个非常耗时
+
+
+

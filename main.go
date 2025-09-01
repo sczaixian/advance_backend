@@ -1,14 +1,27 @@
 package main
 
 import (
-	"advance_backend/solana_test"
 	"advance_backend/test"
 	"fmt"
 )
 
 func demo_solana() {
 	//solana_test.TestAddress()
-	solana_test.TestCreateAccount()
+	//solana_test.TestCreateAccount()
+	//solana_test.ExampleFromBase64()
+	//solana_test.TestCreateAccount()
+	//solana_test.TestWalletTransaction()
+	//solana_test.TestGetAccountInfo()
+	//solana_test.TestRpcGetBalance()
+	//solana_test.TestRpcGetBlock()  // TODO:
+	//solana_test.TestRpcGetCommitment()
+	//solana_test.TestRpcGetBlockHeight()
+	//solana_test.TestRpcGetBlockProduction()
+	//solana_test.TestRpcGetBlockTime()
+	//solana_test.TestRpcGetBlocks()
+	//solana_test.TestRpcGetBlockWithLimit()
+	//solana_test.TestRpcGetClusterNodes()
+
 }
 
 func demo_test() {
@@ -21,12 +34,12 @@ func demo_test() {
 	client_ws := test.TestClientWebSocket()
 	_ = client_ws
 	fmt.Println("-------clientWebSocket--------\n\n")
-	//address := test.TestAddress(client)
-	//fmt.Println("-------TestAddress-----------\n\n")
-	//test.TestBlock(client)
-	//fmt.Println("-------TestBlock-----------\n\n")
-	//test.TestBalance(client, &address)
-	//fmt.Println("-------TestBalance-----------\n\n")
+	address := test.TestAddress(client)
+	fmt.Println("-------TestAddress-----------\n\n")
+	test.TestBlock(client)
+	fmt.Println("-------TestBlock-----------\n\n")
+	test.TestBalance(client, &address)
+	fmt.Println("-------TestBalance-----------\n\n")
 	//test.SelectTransfer(client)
 	//fmt.Println("-------SelectTransfer-----------\n\n")
 	//test.SelectReceipt(client)
@@ -35,7 +48,7 @@ func demo_test() {
 	//fmt.Println("-------GenPrivateKey-----------\n\n")
 	////test.TestTransfer(client)
 	//fmt.Println("-------TestTransfer-----------\n\n")
-	test.SelectTokenBalance(client)
+	//test.SelectTokenBalance(client)
 	//fmt.Println("-------SelectTokenBalance-----------\n\n")
 	//test.TestTokenTransfer(client)
 	//fmt.Println("-------TestTokenTransfer-----------\n\n")

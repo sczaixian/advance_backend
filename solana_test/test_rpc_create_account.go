@@ -7,8 +7,6 @@ import (
 
 	"github.com/gagliardetto/solana-go"
 	"github.com/gagliardetto/solana-go/rpc"
-
-	"github.com/mr-tron/base58"
 )
 
 /*
@@ -68,27 +66,27 @@ func TestCreateAccount() {
 	// 可以查询账户余额确认是否收到了空投的SOL
 }
 
-func TestReceive1SOL() {
-	client := rpc.New(rpc.DevNet_RPC)
-	out, err := client.RequestAirdrop(
-		context.TODO(),
-		//byte[]("E1iGi7Ww8SUAG92HN62rbJGEH7XQcGr6Hz4VcJ49ZeBG"),
-		base58.Decode("E1iGi7Ww8SUAG92HN62rbJGEH7XQcGr6Hz4VcJ49ZeBG"),
-		solana.LAMPORTS_PER_SOL*1,
-		rpc.CommitmentFinalized,
-	)
-
-	// 错误处理：如果空投请求失败，抛出异常并终止程序
-	if err != nil {
-		panic(err)
-	}
-
-	// 打印空投交易的签名哈希
-	// 这个签名可以用于在区块链浏览器上查询交易状态
-	fmt.Println("airdrop transaction signature:", out)
-
-	// 等待30秒，让空投交易有足够时间被网络确认和处理
-	// 在实际应用中，应该使用更可靠的方法检查交易状态，而不是简单等待
-	// 例如，可以使用client.GetSignatureStatuses()定期检查交易确认状态
-	time.Sleep(30 * time.Second)
-}
+//func TestReceive1SOL() {
+//	client := rpc.New(rpc.DevNet_RPC)
+//	out, err := client.RequestAirdrop(
+//		context.TODO(),
+//
+//		base58.Decode(byte[]("E1iGi7Ww8SUAG92HN62rbJGEH7XQcGr6Hz4VcJ49ZeBG")),
+//		solana.LAMPORTS_PER_SOL*1,
+//		rpc.CommitmentFinalized,
+//	)
+//
+//	// 错误处理：如果空投请求失败，抛出异常并终止程序
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	// 打印空投交易的签名哈希
+//	// 这个签名可以用于在区块链浏览器上查询交易状态
+//	fmt.Println("airdrop transaction signature:", out)
+//
+//	// 等待30秒，让空投交易有足够时间被网络确认和处理
+//	// 在实际应用中，应该使用更可靠的方法检查交易状态，而不是简单等待
+//	// 例如，可以使用client.GetSignatureStatuses()定期检查交易确认状态
+//	time.Sleep(30 * time.Second)
+//}
