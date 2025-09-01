@@ -7,6 +7,8 @@ import (
 
 	"github.com/gagliardetto/solana-go"
 	"github.com/gagliardetto/solana-go/rpc"
+
+	"github.com/mr-tron/base58"
 )
 
 /*
@@ -71,7 +73,7 @@ func TestReceive1SOL() {
 	out, err := client.RequestAirdrop(
 		context.TODO(),
 		//byte[]("E1iGi7Ww8SUAG92HN62rbJGEH7XQcGr6Hz4VcJ49ZeBG"),
-		byte("E1iGi7Ww8SUAG92HN62rbJGEH7XQcGr6Hz4VcJ49ZeBG"),
+		base58.Decode("E1iGi7Ww8SUAG92HN62rbJGEH7XQcGr6Hz4VcJ49ZeBG"),
 		solana.LAMPORTS_PER_SOL*1,
 		rpc.CommitmentFinalized,
 	)

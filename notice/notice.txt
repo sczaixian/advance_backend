@@ -25,3 +25,16 @@ Hash             本区块的身份证        本区块头的所有内容       
 Parent Hash      上一个区块的身份证     上一个区块的 Hash             形成链式结构，保证历史不可篡改
 StateRoot         全局状态的摘要       所有账户余额、合约代码和存储     对世界状态做出承诺，实现轻客户端验证
 WithdrawalsRoot   提款交易的摘要       本区块中包含的所有提款请求       处理POS质押提款，协调共识层与执行层
+
+
+看的项目：
+https://github.com/MetaNodeAcademy/Base2_Solidity_Dex/blob/main/MetaNodeSwap%E5%90%88%E7%BA%A6%E8%AE%BE%E8%AE%A1.md
+deepseek标签名：Uniswap V3 UML图解析与架构梳理
+
+
+uniswap介绍：
+https://zhuanlan.zhihu.com/p/446271796
+
+是个分布式交易所
+用户自己掌控私钥，不会被平台控制
+基于 swap 和 factory 两个合约
