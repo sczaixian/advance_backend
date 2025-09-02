@@ -3,11 +3,12 @@ module advance_backend
 go 1.24.5
 
 require (
-	github.com/AlekSi/pointer v1.1.0
 	github.com/davecgh/go-spew v1.1.1
 	github.com/ethereum/go-ethereum v1.16.2
 	github.com/gagliardetto/binary v0.8.0
 	github.com/gagliardetto/solana-go v1.13.0
+	github.com/gofika/bip39 v0.0.0-20250811042518-c92c0ca063f0
+	github.com/tyler-smith/go-bip39 v1.1.0
 	golang.org/x/crypto v0.41.0
 	golang.org/x/time v0.12.0
 )

@@ -13,7 +13,8 @@ import (
 )
 
 func TestAddress() {
-	cluster := rpc.MainNetBeta
+	//cluster := rpc.MainNetBeta
+	cluster := rpc.DevNet
 
 	rpcClient := rpc.NewWithCustomRPCClient(rpc.NewWithLimiter(
 		cluster.RPC,
