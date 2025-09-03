@@ -1,6 +1,7 @@
 package main
 
 import (
+	"advance_backend/eth_test"
 	"advance_backend/solana_test"
 	"advance_backend/test"
 	"advance_backend/xxx"
@@ -98,10 +99,16 @@ func gen_wallet() {
 	fmt.Println("-------  SolanaWalletCreateDeepseek  -----------\n\n")
 }
 
+func eth_test_rlp() {
+	eth_test.Test1()
+}
+
 func main() {
 	//demo_test()
 	//demo_solana()
-	self_test()
+	//self_test()
 	//gen_wallet()
 	//check_demo.TestXXXBBBB()
+
+	eth_test_rlp()
 }
