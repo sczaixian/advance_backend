@@ -3,9 +3,11 @@ package main
 import (
 	"advance_backend/eth_test"
 	"advance_backend/solana_test"
+	"advance_backend/tasks"
 	"advance_backend/test"
 	"advance_backend/xxx"
 	"fmt"
+	"math/big"
 )
 
 func demo_solana() {
@@ -103,6 +105,12 @@ func eth_test_rlp() {
 	eth_test.Test1()
 }
 
+func tasksExec() {
+	blockNumber := big.NewInt(9249114)
+	tasks.Task1(blockNumber)
+	fmt.Println("-------  Task1  -----------\n\n")
+	tasks.Task1Tx()
+}
 func main() {
 	//demo_test()
 	//demo_solana()
@@ -110,5 +118,6 @@ func main() {
 	//gen_wallet()
 	//check_demo.TestXXXBBBB()
 
-	eth_test_rlp()
+	//eth_test_rlp()
+	tasksExec()
 }
