@@ -3,11 +3,12 @@ module advance_backend
 go 1.24.5
 
 require (
+	github.com/blocto/solana-go-sdk v1.30.0
 	github.com/davecgh/go-spew v1.1.1
 	github.com/ethereum/go-ethereum v1.16.3
 	github.com/gagliardetto/binary v0.8.0
 	github.com/gagliardetto/solana-go v1.13.0
-	github.com/gofika/bip39 v0.0.0-20250811042518-c92c0ca063f0
+	github.com/mr-tron/base58 v1.2.0
 	github.com/tyler-smith/go-bip39 v1.1.0
 	golang.org/x/crypto v0.42.0
 	golang.org/x/time v0.12.0
@@ -45,7 +46,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/mostynb/zstdpool-freelist v0.0.0-20201229113212-927304c0c3b1 // indirect
-	github.com/mr-tron/base58 v1.2.0 // indirect
 	github.com/shirou/gopsutil v3.21.4-0.20210419000835-c7a38de76ee5+incompatible // indirect
 	github.com/streamingfast/logging v0.0.0-20230608130331-f22c91403091 // indirect
 	github.com/supranational/blst v0.3.16 // indirect

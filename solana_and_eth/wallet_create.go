@@ -68,7 +68,7 @@ func SolanaWalletCreate() {
 	fmt.Println("account public key:", account.PublicKey())
 
 	// Create a new RPC client:
-	client := rpc.New(rpc.TestNet_RPC)
+	client := rpc.New(rpc.DevNet_RPC)
 
 	// Airdrop 1 SOL to the new account:
 	out, err := client.RequestAirdrop(

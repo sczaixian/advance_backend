@@ -3,10 +3,15 @@ package tasks
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/big"
 
+	"github.com/blocto/solana-go-sdk/client"
+	"github.com/blocto/solana-go-sdk/common"
+	"github.com/blocto/solana-go-sdk/types"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gagliardetto/solana-go"
+	"github.com/gagliardetto/solana-go/programs/system"
 	"github.com/gagliardetto/solana-go/rpc"
 )
 
@@ -88,10 +93,10 @@ func lam2sol(balance uint64) *big.Float {
 }
 
 func Task3Solana() {
-	//endpoint := rpc.DevNet_RPC
-	endpoint := rpc.TestNet_RPC
+	endpoint := rpc.DevNet_RPC
+	//endpoint := rpc.TestNet_RPC
 	client := rpc.New(endpoint)
-	pubKey := solana.MustPublicKeyFromBase58("HFsvV2HGaKQAj1iVpXjzQ59t4cq2kg4ghQwACWzaAVYQ")
+	pubKey := solana.MustPublicKeyFromBase58("Bs8w3djVWq2zhJaTeNqtEjZke5hVpV6YqKT7UpZtkV18")
 	out, err := client.GetBalance(context.TODO(), pubKey, rpc.CommitmentFinalized)
 	if err != nil {
 		fmt.Println("err ----solanaBalance------>> ", err)
@@ -100,13 +105,59 @@ func Task3Solana() {
 	spew.Dump(out)
 	spew.Dump(out.Value) // total lamports on the account; 1 sol = 1000000000 lamports
 	fmt.Println("◎", lam2sol(out.Value).Text('f', 10))
+	/*(*rpc.GetBalanceResult)(0xc0003302d0)({
+	 RPCContext: (rpc.RPCContext) {
+	  Context: (rpc.Context) {
+	   Slot: (uint64) 359282529
+	  }
+	 },
+	 Value: (uint64) 5000000000
+	})
+	(uint64) 5000000000
+	◎ 5.0000000000*/
 
+	pubKey2 := solana.MustPublicKeyFromBase58("8Hiavosyqsv1jiyTVEczZEYACbV4UrVjXLN7gQYi5ctW")
+	out, err = client.GetBalance(context.TODO(), pubKey2, rpc.CommitmentFinalized)
+	if err != nil {
+		fmt.Println("err ----solanaBalance------>> ", err)
+		return
+	}
+	spew.Dump(out)
+	spew.Dump(out.Value) // total lamports on the account; 1 sol = 1000000000 lamports
+	fmt.Println("◎", lam2sol(out.Value).Text('f', 10))
 }
 
 /*account private key: 3AVEGHQYnxKZovJU6co9qaHaGV8XEzBeve8rpDtbL7QdXGGoHd7CCE4SKNpZhuwUmHDZZTHsuQsrPL3P1PX417bc
 account public key: Bs8w3djVWq2zhJaTeNqtEjZke5hVpV6YqKT7UpZtkV18
+
+
+account private key: 3uWXmRdBVyc4Yu1U9iszXdqD57qEjKM8fdFCk8wBozgi1jBqJriQ28hSzsULXbfKgCjCc1LE39N5edFPBWqT6Dgz
+account public key: 8Hiavosyqsv1jiyTVEczZEYACbV4UrVjXLN7gQYi5ctW
+airdrop transaction signature: 5q9RSEDY6zWu7CBsNZWxFt5vZctoJrpCpq8sFdZpehxUY7Q35mjKmLFyYw297UQV2ZtF2J85Qkro43MeUjsLAMLC
+
+
+
 error:--SolanaWalletCreate-->  rpc call requestAirdrop() on https://api.devnet.solana.com:
 Post "https://api.devnet.solana.com": dial tcp 185.60.216.36:443:
 connectex: A connection attempt failed because the connected party did not properly respond after a period of time,
 or established connection failed because connected host has failed to respond.
 */
+
+func Task3Transfer() {
+	privateKey := "3AVEGHQYnxKZovJU6co9qaHaGV8XEzBeve8rpDtbL7QdXGGoHd7CCE4SKNpZhuwUmHDZZTHsuQsrPL3P1PX417bc"
+	toAddress := "8Hiavosyqsv1jiyTVEczZEYACbV4UrVjXLN7gQYi5ctW"
+	amount := uint64(10000000) // 0.01 sol
+
+
+	instruction := system.NewTransferInstruction(
+		from.PublicKey(),
+		to.PublicKey(),
+		lamports,
+	).Build()
+
+	tx,  := solana.NewTransaction(
+		[]solana.Instruction{instruction},
+		recentBlockhash,
+		solana.TransactionPayer(from.PublicKey()),
+	)
+}
