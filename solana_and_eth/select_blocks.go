@@ -1,4 +1,4 @@
-package xxx
+package solana_and_eth
 
 import (
 	"context"

@@ -2,12 +2,11 @@ package main
 
 import (
 	"advance_backend/eth_test"
+	"advance_backend/solana_and_eth"
 	"advance_backend/solana_test"
 	"advance_backend/tasks"
 	"advance_backend/test"
-	"advance_backend/xxx"
 	"fmt"
-	"math/big"
 )
 
 func demo_solana() {
@@ -63,41 +62,41 @@ func demo_test() {
 }
 
 func self_test() {
-	ethClient := xxx.EthClient()
-	solanaClient := xxx.SolanaClientTestNet()
+	ethClient := solana_and_eth.EthClient()
+	solanaClient := solana_and_eth.SolanaClientTestNet()
 	fmt.Println("-------init client-----------\n\n")
-	ethBlock := xxx.EthSelectBlock(ethClient)
+	ethBlock := solana_and_eth.EthSelectBlock(ethClient)
 	fmt.Println("-------  EthSelectBlock  -----------\n\n")
-	solanaBlock := xxx.SolanaSelectBlock(solanaClient)
+	solanaBlock := solana_and_eth.SolanaSelectBlock(solanaClient)
 	fmt.Println("-------  SolanaSelectBlock  -----------\n\n")
-	xxx.EthTransaction(ethClient, ethBlock)
+	solana_and_eth.EthTransaction(ethClient, ethBlock)
 	fmt.Println("-------  EthTransaction  -----------\n\n")
-	xxx.SolanaTransaction(solanaClient, solanaBlock)
+	solana_and_eth.SolanaTransaction(solanaClient, solanaBlock)
 	fmt.Println("-------  SolanaTransaction  -----------\n\n")
 	// TODO: eth 转账， 代币转账
-	xxx.EthBalance(ethClient)
+	solana_and_eth.EthBalance(ethClient)
 	fmt.Println("-------  EthBalance  -----------\n\n")
-	xxx.SolanaBalance()
+	solana_and_eth.SolanaBalance()
 	fmt.Println("-------  SolanaBalance  -----------\n\n")
-	xxx.EthSubscribes()
+	solana_and_eth.EthSubscribes()
 	fmt.Println("-------  EthSubscribes  -----------\n\n")
-	xxx.SolanaSubscribesAccount()
+	solana_and_eth.SolanaSubscribesAccount()
 	fmt.Println("-------  SolanaSubscribesAccount  -----------\n\n")
-	xxx.SolanaSubscribesLog()
+	solana_and_eth.SolanaSubscribesLog()
 	fmt.Println("-------  SolanaSubscribesLog  -----------\n\n")
-	xxx.SolanaSubscribesSol()
+	solana_and_eth.SolanaSubscribesSol()
 	fmt.Println("-------  SolanaSubscribesSol  -----------\n\n")
 
 }
 
 func gen_wallet() {
-	xxx.EthWalletCreate()
+	solana_and_eth.EthWalletCreate()
 	fmt.Println("-------  EthWalletCreate  -----------\n\n")
-	xxx.SolanaWalletCreate()
+	solana_and_eth.SolanaWalletCreate()
 	fmt.Println("-------  SolanaWalletCreate  -----------\n\n")
-	xxx.EthWalletCreateDeepseek()
+	solana_and_eth.EthWalletCreateDeepseek()
 	fmt.Println("-------  EthWalletCreateDeepseek  -----------\n\n")
-	xxx.SolanaWalletCreateDeepseek()
+	solana_and_eth.SolanaWalletCreateDeepseek()
 	fmt.Println("-------  SolanaWalletCreateDeepseek  -----------\n\n")
 }
 
@@ -106,10 +105,14 @@ func eth_test_rlp() {
 }
 
 func tasksExec() {
-	blockNumber := big.NewInt(9249114)
-	tasks.Task1(blockNumber)
-	fmt.Println("-------  Task1  -----------\n\n")
-	tasks.Task1Tx()
+	//blockNumber := big.NewInt(9249114)
+	//tasks.Task1(blockNumber)
+	//fmt.Println("-------  Task1  -----------\n\n")
+	//tasks.Task1Tx()
+	//fmt.Println("-------  Task1Tx  -----------\n\n")
+	//tasks.CounterTest()
+	//fmt.Println("-------  CounterTest  -----------\n\n")
+	tasks.Task3Solana()
 }
 func main() {
 	//demo_test()
