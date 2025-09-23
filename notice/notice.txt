@@ -42,9 +42,10 @@ https://zhuanlan.zhihu.com/p/446271796
 
 
 
+sc@DESKTOP-ORJH2TD:/mnt/d/web3_porjs/task_solana/task-three$ anchor build
+error: not a directory: '/home/sc/.local/share/solana/install/releases/stable-79b85a16e903561e1037d982123bb974c46a0868/solana-release/bin/platform-tools-sdk/sbf/dependencies/platform-tools/rust/lib'
 
-
-
+rm -rf ~/.cache/solana/*   #清理缓存后重新 anchor build
 
 
 

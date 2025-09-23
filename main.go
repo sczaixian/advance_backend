@@ -112,7 +112,8 @@ func tasksExec() {
 	//fmt.Println("-------  Task1Tx  -----------\n\n")
 	//tasks.CounterTest()
 	//fmt.Println("-------  CounterTest  -----------\n\n")
-	tasks.Task3Solana()
+	//tasks.Task3Solana()
+	tasks.Task3Transfer()
 }
 func main() {
 	//demo_test()

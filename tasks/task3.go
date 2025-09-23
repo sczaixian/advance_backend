@@ -3,16 +3,16 @@ package tasks
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/big"
+	"os"
 
-	"github.com/blocto/solana-go-sdk/client"
-	"github.com/blocto/solana-go-sdk/common"
-	"github.com/blocto/solana-go-sdk/types"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gagliardetto/solana-go"
 	"github.com/gagliardetto/solana-go/programs/system"
 	"github.com/gagliardetto/solana-go/rpc"
+	confirm "github.com/gagliardetto/solana-go/rpc/sendAndConfirmTransaction"
+	"github.com/gagliardetto/solana-go/rpc/ws"
+	"github.com/gagliardetto/solana-go/text"
 )
 
 /*Solana-Go 开发实战作业
@@ -105,10 +105,10 @@ func Task3Solana() {
 	spew.Dump(out)
 	spew.Dump(out.Value) // total lamports on the account; 1 sol = 1000000000 lamports
 	fmt.Println("◎", lam2sol(out.Value).Text('f', 10))
-	/*(*rpc.GetBalanceResult)(0xc0003302d0)({
+	/*(*rpc.GetBalanceResult)(0xc00025b010)({
 	 RPCContext: (rpc.RPCContext) {
 	  Context: (rpc.Context) {
-	   Slot: (uint64) 359282529
+	   Slot: (uint64) 409704572
 	  }
 	 },
 	 Value: (uint64) 5000000000
@@ -125,6 +125,16 @@ func Task3Solana() {
 	spew.Dump(out)
 	spew.Dump(out.Value) // total lamports on the account; 1 sol = 1000000000 lamports
 	fmt.Println("◎", lam2sol(out.Value).Text('f', 10))
+	/*(*rpc.GetBalanceResult)(0xc0003ac040)({
+	 RPCContext: (rpc.RPCContext) {
+	  Context: (rpc.Context) {
+	   Slot: (uint64) 409704573
+	  }
+	 },
+	 Value: (uint64) 2000000000
+	})
+	(uint64) 2000000000
+	◎ 2.0000000000*/
 }
 
 /*account private key: 3AVEGHQYnxKZovJU6co9qaHaGV8XEzBeve8rpDtbL7QdXGGoHd7CCE4SKNpZhuwUmHDZZTHsuQsrPL3P1PX417bc
@@ -144,20 +154,93 @@ or established connection failed because connected host has failed to respond.
 */
 
 func Task3Transfer() {
-	privateKey := "3AVEGHQYnxKZovJU6co9qaHaGV8XEzBeve8rpDtbL7QdXGGoHd7CCE4SKNpZhuwUmHDZZTHsuQsrPL3P1PX417bc"
+	privateKeyStr := "3AVEGHQYnxKZovJU6co9qaHaGV8XEzBeve8rpDtbL7QdXGGoHd7CCE4SKNpZhuwUmHDZZTHsuQsrPL3P1PX417bc"
 	toAddress := "8Hiavosyqsv1jiyTVEczZEYACbV4UrVjXLN7gQYi5ctW"
 	amount := uint64(10000000) // 0.01 sol
 
+	rpcClient := rpc.New(rpc.DevNet_RPC)
+	wsClient, err := ws.Connect(context.Background(), rpc.DevNet_WS)
 
-	instruction := system.NewTransferInstruction(
-		from.PublicKey(),
-		to.PublicKey(),
-		lamports,
-	).Build()
+	privateKey := solana.MustPrivateKeyFromBase58(privateKeyStr)
+	fromPubKey := privateKey.PublicKey()
+	toPubKey := solana.MustPublicKeyFromBase58(toAddress)
+	//  最新区块，作为有效期凭证，同时放重放
+	r, err := rpcClient.GetLatestBlockhash(context.Background(), rpc.CommitmentFinalized)
+	if err != nil {
+		fmt.Println("err ----GetLatestBlockhash------>> ", err)
+	}
 
-	tx,  := solana.NewTransaction(
-		[]solana.Instruction{instruction},
-		recentBlockhash,
-		solana.TransactionPayer(from.PublicKey()),
-	)
+	// 生成新转账指令
+	instruction := system.NewTransferInstruction(amount, fromPubKey, toPubKey).Build()
+	// 创建交易，添加指令
+	tx, err := solana.NewTransaction([]solana.Instruction{instruction}, r.Value.Blockhash, solana.TransactionPayer(fromPubKey))
+	if err != nil {
+		panic(err)
+	}
+	// 签名交易
+	_, err = tx.Sign(func(key solana.PublicKey) *solana.PrivateKey {
+		if privateKey.PublicKey().Equals(key) {
+			return &privateKey
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(tx)
+	tx.EncodeTree(text.NewTreeEncoder(os.Stdout, "Transfer SOL"))
+	// 发送交易到solana网络，成功会返回交易签名
+	sig, err := confirm.SendAndConfirmTransaction(context.Background(), rpcClient, wsClient, tx)
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(sig)
+
 }
+
+/*(*solana.Transaction)(0xc0003595e0)(
+   ├─ Signatures[len=1]
+   │    └─ 3r4yPnr4S716HekXRVzo4vUk51W3ykcb5zrNpw7FLwKWFABhmZ79BumwHHdJqCrUBzAj21TrvpX5HzuLB9hmfSSb
+   ├─ Message
+   │    ├─ Version: legacy
+   │    ├─ RecentBlockhash: HK56oohPw5RhpW2ndZ6LRRtriTpQWPLYP4RKF3JDg2X9
+   │    ├─ AccountKeys[len=3]
+   │    │    ├─ Bs8w3djVWq2zhJaTeNqtEjZke5hVpV6YqKT7UpZtkV18
+   │    │    ├─ 8Hiavosyqsv1jiyTVEczZEYACbV4UrVjXLN7gQYi5ctW
+   │    │    └─ 11111111111111111111111111111111
+   │    └─ Header
+   │       ├─ NumRequiredSignatures: 1
+   │       ├─ NumReadonlySignedAccounts: 0
+   │       └─ NumReadonlyUnsignedAccounts: 1
+   └─ Instructions[len=1]
+      └─ Program: System 11111111111111111111111111111111
+         └─ Instruction: Transfer
+            ├─ Params
+            │    └─ Lamports: (uint64) 10000000
+            └─ Accounts
+               ├─   Funding: Bs8w3djVWq2zhJaTeNqtEjZke5hVpV6YqKT7UpZtkV18 [WRITE, SIGN]
+               └─ Recipient: 8Hiavosyqsv1jiyTVEczZEYACbV4UrVjXLN7gQYi5ctW [WRITE]
+)
+   Transfer SOL
+   ├─ Signatures[len=1]
+   │    └─ 3r4yPnr4S716HekXRVzo4vUk51W3ykcb5zrNpw7FLwKWFABhmZ79BumwHHdJqCrUBzAj21TrvpX5HzuLB9hmfSSb
+   ├─ Message
+   │    ├─ Version: legacy
+   │    ├─ RecentBlockhash: HK56oohPw5RhpW2ndZ6LRRtriTpQWPLYP4RKF3JDg2X9
+   │    ├─ AccountKeys[len=3]
+   │    │    ├─ Bs8w3djVWq2zhJaTeNqtEjZke5hVpV6YqKT7UpZtkV18
+   │    │    ├─ 8Hiavosyqsv1jiyTVEczZEYACbV4UrVjXLN7gQYi5ctW
+   │    │    └─ 11111111111111111111111111111111
+   │    └─ Header
+   │       ├─ NumRequiredSignatures: 1
+   │       ├─ NumReadonlySignedAccounts: 0
+   │       └─ NumReadonlyUnsignedAccounts: 1
+   └─ Instructions[len=1]
+      └─ Program: System 11111111111111111111111111111111
+         └─ Instruction: Transfer
+            ├─ Params
+            │    └─ Lamports: (uint64) 10000000
+            └─ Accounts
+               ├─   Funding: Bs8w3djVWq2zhJaTeNqtEjZke5hVpV6YqKT7UpZtkV18 [WRITE, SIGN]
+               └─ Recipient: 8Hiavosyqsv1jiyTVEczZEYACbV4UrVjXLN7gQYi5ctW [WRITE]
+(solana.Signature) (len=64 cap=64) 3r4yPnr4S716HekXRVzo4vUk51W3ykcb5zrNpw7FLwKWFABhmZ79BumwHHdJqCrUBzAj21TrvpX5HzuLB9hmfSSb*/
