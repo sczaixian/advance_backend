@@ -1,7 +1,9 @@
 package main
 
 import (
+	"advance_backend/alchemy_api"
 	"advance_backend/eth_test"
+	"advance_backend/opensea_api"
 	"advance_backend/solana_and_eth"
 	"advance_backend/solana_test"
 	"advance_backend/tasks"
@@ -115,6 +117,36 @@ func tasksExec() {
 	//tasks.Task3Solana()
 	tasks.Task3Transfer()
 }
+
+func openseaAPI() {
+	// docs :  https://docs.opensea.io/reference/api-keys
+	apiKey := "6098d14358814514a0cae4d5369bb77f"
+	account_address := "0x3E0bDb54f94D735dDCf8D2074c852a8C22914aA7"
+	c_address := "0x6571a7350f0f879f89f7f434ea32ec4c1f947df7"
+	perfix := "https://api.opensea.io/api/v2/"
+	sepolia_chain_id := "11155111"
+	urls := make(map[string]string)
+	//get account: https://api.opensea.io/api/v2/accounts/{address_or_username}
+	urls["get_account"] = "%s/accounts/%s"
+	//getNFT:  https://api.opensea.io/api/v2/chain/{chain}/contract/{address}/nfts/{identifier}
+	urls["get_nfg"] = "%s/chain/%s/contract/%s/nfts/%s"
+	//by account: https://api.opensea.io/api/v2/chain/{chain}/account/{address}/nfts
+	urls["account"] = "%s/chain/%s/account/%s/nfts"
+	//by collection: https://api.opensea.io/api/v2/collection/{collection_slug}/nfts
+	//by contract: https://api.opensea.io/api/v2/chain/{chain}/contract/{address}/nfts
+	//get payment token: https://api.opensea.io/api/v2/chain/{chain}/payment_token/{address}
+	//opensea_api.AccountAPI()
+	//opensea_api.CollectionAPI()
+	//opensea_api.GetCollectionsAPI()
+	opensea_api.API_Call(fmt.Sprintf(urls["get_account"], perfix, account_address), apiKey)
+	opensea_api.API_Call(fmt.Sprintf(urls["account"], perfix, sepolia_chain_id, c_address), apiKey)
+}
+
+func alchemyAPI() {
+	//alchemy_api.API_Call()
+	alchemy_api.AlchemyAPI()
+}
+
 func main() {
 	//demo_test()
 	//demo_solana()
@@ -123,5 +155,7 @@ func main() {
 	//check_demo.TestXXXBBBB()
 
 	//eth_test_rlp()
-	tasksExec()
+	//tasksExec()
+	//openseaAPI()
+	alchemyAPI()
 }
